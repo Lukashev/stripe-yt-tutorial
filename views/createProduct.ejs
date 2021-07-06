@@ -1,0 +1,31 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-6 offset-md-3">
+      <fieldset class="mt-3 mb-3">
+        <legend>Create Product</legend>
+        <% if (status === 200) { %>
+          <div class="alert alert-success" role="alert">
+            <%= responseMsg %> . <a href="/admin">Return</a>
+          </div>
+        <%} else if (status === 400) { %>
+          <div class="alert alert-danger" role="alert">
+            <%= responseMsg %> . <a href="/admin">Return</a>
+          </div>
+        <% } %>
+        <form action="/admin/createProduct" method="POST">
+          <div class="mb-3">
+            <label class="form-label">Name</label>
+            <input type="text" class="form-control" placeholder="Enter product name..." name="name" required>
+          </div>
+          <div class="mb-3">
+            <div class="mb-3">
+              <label  class="form-label">Description</label>
+              <textarea class="form-control" rows="3" name="description"></textarea>
+            </div>
+          </div>
+          <button class="btn btn-success">Submit</button>
+        </form>
+      </fieldset>
+    </div>
+  </div>
+</div>

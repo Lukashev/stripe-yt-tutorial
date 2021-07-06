@@ -1,0 +1,67 @@
+<div class="container">
+  <h3 class="mt-3 mb-3">Subscriptions</h3>
+  <%if (!subs.length) { %>
+    <p class="mt-3 mb-3">You have not already had subscriptions yet</p>
+  <%} else {%>
+  <div class="row">
+    <% subs.forEach(function(sub){ %>
+      <div class="col-lg-4">
+        <div class="card mb-3">
+          <div class="card-body">
+            <h5 class="card-title mb-3"><%= sub.productName %> : <%= sub.plan.nickname %></h5>
+            <h6 class="card-subtitle mb-3 text-muted">Created: <%= new Date(sub.created * 1000).toDateString() %></h6>
+            <ul class="list-group">
+              <li class="list-group-item">
+                Interval: <%= sub.plan.interval %>
+              </li>
+              <li class="list-group-item">
+                Price: <%= sub.amount %>
+              </li>
+            </ul>
+            <!-- <a href="#" class="card-link">Card link</a>
+            <a href="#" class="card-link">Another link</a> -->
+          </div>
+        </div>
+      </div>
+    <% }); %>
+  </div>
+  <% } %>
+  <hr>
+  <h3 class="mb-3">Product List</h3>
+  <%if (!productList.length) { %>
+    <p class="mt-3 mb-3">Product list is empty</p>
+  <% } %>
+  <% productList.forEach(function(p){ %>
+    <div class="col-lg-4">
+      <div class="card">
+        <div class="card-body">
+          <h5 class="card-title"><%= p.name  %></h5>
+          <p class="card-text"><%= p.description  %></p>
+          <p>Available subscription plans: </p>
+          <ul class="list-group">
+            <% p.plans.forEach(function(plan){ %>
+            <li class="list-group-item mb-3">
+              <h5><%= plan.nickname  %> &mdash; <%= plan.amount  %> /
+                <% if (plan.interval_count > 1) { %>
+                  <span><%= plan.interval_count %> <%= plan.interval %> s</span>
+                <%} else {%>
+                  <span><%= plan.interval %></span>
+                <% } %>
+                </h5>
+              <form action="/customer/subscribe" method="POST">
+                <input type="hidden" value="<%= p.name %>" name="productName"/>
+                <input type="hidden" value="<%= plan.id %>" name="planId"/>
+                <input type="hidden" value="<%= plan.nickname %>" name="planName"/>
+                <input type="hidden" value="<%= plan.amount %>" name="planAmount"/>
+                <input type="hidden" value="<%= plan.interval %>" name="planInterval"/>
+                <input type="hidden" value="<%= plan.interval_count %>" name="planIntervalCount"/>
+                <button class="btn btn-danger">Subscribe</button>
+              </form>
+            </li>
+            <% }); %>
+          </ul>
+        </div>
+      </div>
+    </div>
+  <% }); %>
+</div>
